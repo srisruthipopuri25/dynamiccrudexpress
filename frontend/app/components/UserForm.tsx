@@ -1,33 +1,43 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { IUser } from "../types/user";
-import { userFormFields } from "../config/formConfig";
+import { useState, useEffect } from 'react';
+import { IUser } from '../types/user';
+import { userFormFields } from '../config/formConfig';
+import Spinner from './Spinner';
 
 interface Props {
   onSubmit: (data: IUser) => Promise<void>;
   selectedUser: IUser | null;
+  setSelectedUser: (user: IUser | null) => void;
   loading: boolean;
 }
 
-export default function UserForm({ onSubmit, selectedUser, loading }: Props) {
-  const [formData, setFormData] = useState<IUser>({
-    firstName: "",
-    lastName: "",
-    phone: "",
-    email: ""
-  });
+export default function UserForm({
+  onSubmit,
+  selectedUser,
+  setSelectedUser,
+  loading,
+}: Props) {
+  const emptyForm: IUser = {
+    firstName: '',
+    lastName: '',
+    phone: '',
+    email: '',
+  };
 
+  const [formData, setFormData] = useState<IUser>(emptyForm);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
-    if (selectedUser) setFormData(selectedUser);
+    if (selectedUser) {
+      setFormData(selectedUser);
+    }
   }, [selectedUser]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
 
-    userFormFields.forEach(field => {
+    userFormFields.forEach((field) => {
       const value = formData[field.name];
 
       if (field.required && !value)
@@ -44,7 +54,7 @@ export default function UserForm({ onSubmit, selectedUser, loading }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -53,26 +63,26 @@ export default function UserForm({ onSubmit, selectedUser, loading }: Props) {
     if (!validate()) return;
 
     await onSubmit(formData);
+    setFormData(emptyForm);
+  };
 
-    setFormData({
-      firstName: "",
-      lastName: "",
-      phone: "",
-      email: ""
-    });
+  const handleCancel = () => {
+    setFormData(emptyForm);
+    setSelectedUser(null);
+    setErrors({});
   };
 
   return (
     <div className="bg-white shadow-xl rounded-2xl p-6 w-full">
       <h2 className="text-xl font-semibold mb-6 text-center">
-        {selectedUser ? "Update User" : "Add User"}
+        {selectedUser ? 'Update User' : 'Add User'}
       </h2>
 
       <form
         onSubmit={handleSubmit}
         className="grid grid-cols-1 sm:grid-cols-2 gap-4"
       >
-        {userFormFields.map(field => (
+        {userFormFields.map((field) => (
           <div key={field.name} className="flex flex-col">
             <label className="mb-1 text-sm font-medium text-gray-700">
               {field.label}
@@ -81,9 +91,10 @@ export default function UserForm({ onSubmit, selectedUser, loading }: Props) {
             <input
               type={field.type}
               name={field.name}
-              value={formData[field.name] || ""}
+              value={formData[field.name] || ''}
               onChange={handleChange}
-              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+              disabled={loading}
+              className="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             />
 
             {errors[field.name] && (
@@ -94,18 +105,34 @@ export default function UserForm({ onSubmit, selectedUser, loading }: Props) {
           </div>
         ))}
 
-        <div className="sm:col-span-2">
+        <div className="sm:col-span-2 flex gap-3">
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+            className="flex-1 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-70 flex justify-center items-center gap-2"
           >
-            {loading
-              ? "Processing..."
-              : selectedUser
-              ? "Update User"
-              : "Add User"}
+            {loading ? (
+              <>
+                <Spinner size={18} />
+                Processing...
+              </>
+            ) : selectedUser ? (
+              'Update User'
+            ) : (
+              'Add User'
+            )}
           </button>
+
+          {selectedUser && (
+            <button
+              type="button"
+              onClick={handleCancel}
+              disabled={loading}
+              className="flex-1 bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition disabled:opacity-70"
+            >
+              Cancel
+            </button>
+          )}
         </div>
       </form>
     </div>
