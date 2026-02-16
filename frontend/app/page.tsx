@@ -5,7 +5,10 @@ import UserForm from "./components/UserForm";
 import UserTable from "./components/UserTable";
 import { IUser } from "./types/user";
 
-const API = "http://localhost:5000/api/users";
+// const API = "http://localhost:5000/api/users";
+const API = "https://dynamicrudexpressbackend.vercel.app"
+// frontend
+// https://dynamicrudexpressfrontend.vercel.app/
 
 export default function Home() {
   const [users, setUsers] = useState<IUser[]>([]);
