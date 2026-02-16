@@ -23,7 +23,7 @@ npm install
 ### environment variables
 
 PORT=5000
-MONGO_URI=mongodb+srv://srisruthipopuri:A7@nykaa.8vv9hop.mongodb.net/DynamicUserCRUD?appName=DynamicUserCRUD_collect
+MONGO_URI=mongodb+srv://srisruthipopuri:<_password_>@nykaa.8vv9hop.mongodb.net/DynamicUserCRUD?appName=DynamicUserCRUD_collect
 
 ## Frontend Setup
 
