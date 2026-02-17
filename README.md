@@ -89,3 +89,5 @@ dob: { type: Date }
 - Form submission button is disabled during processing to prevent duplicate requests.
 - Basic error handling is implemented.
 - MongoDB is accessed from MongoDB Atlas.
+- Cancel option provided during edit mode to discard changes.
+
