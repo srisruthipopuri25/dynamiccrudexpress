@@ -90,4 +90,3 @@ dob: { type: Date }
 - Basic error handling is implemented.
 - MongoDB is accessed from MongoDB Atlas.
 - Cancel option provided during edit mode to discard changes.
-
