@@ -113,7 +113,7 @@ export default function UserForm({
           >
             {loading ? (
               <>
-                <Spinner size={18} />
+                <Spinner />
                 Processing...
               </>
             ) : selectedUser ? (
