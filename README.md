@@ -1,12 +1,20 @@
 # MERN User CRUD Application
 Live : https://dynamicrudexpressfrontend.vercel.app/
 
-A full-stack MERN application built using:
+## Tech Stack
 
-- Next.js 16
-- Tailwind CSS
-- Express.js
-- MongoDB (Mongoose)
+### Frontend
+
+Next.js 16
+TypeScript
+Tailwind CSS
+
+### Backend
+
+Node.js
+Express.js
+MongoDB
+Mongoose
 
 The application supports Create, Read, Update, and Delete (CRUD) operations with proper validation, loading indicators, and responsive design.
 
@@ -34,26 +42,50 @@ npm install
 npm run dev
 ```
 
-### How to Add New Fields to the Form
+## How to Add New Fields to the Form
 
-This application uses a configuration-driven approach, meaning form fields and table columns are generated dynamically from a configuration file
+In this application I have added form fields and table columns which are generated dynamically from a configuration file.
 
 Files to update:
 frontend/app/config/formConfig.ts
 
 backend/src/models/User.ts
 
-## Tech Stack
+### To add a new field (example: Date of Birth)
 
-### Frontend
+### Step 1 — Update Frontend Configuration
 
-Next.js 16
-TypeScript
-Tailwind CSS
+Open: client/app/config/formConfig.ts
 
-### Backend
+Add a new field object inside `userFormFields`:
 
-Node.js
-Express.js
-MongoDB
-Mongoose
+```ts
+{
+  name: "dob",
+  label: "Date of Birth",
+  type: "date",
+  required: false
+}
+```
+
+The form and table will automatically show this new field.
+
+### Step 2 — Update Backend Schema
+
+Open: backend/src/models/User.ts
+
+Add the new field inside the Mongoose schema:
+
+```ts
+dob: { type: Date }
+```
+
+## Assumptions
+
+- Components are modularized (UserForm, UserTable, Spinner).
+- Frontend validation is implemented using required rules and regex   patterns.
+- Backend validation is enforced via Mongoose schema.
+- Spinner component used for API calls.
+- Form submission button is disabled during processing to prevent duplicate requests.
+- Basic error handling is implemented.
+- MongoDB is accessed from MongoDB Atlas.
