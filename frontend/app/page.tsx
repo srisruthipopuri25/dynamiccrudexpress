@@ -5,8 +5,8 @@ import UserForm from "./components/UserForm";
 import UserTable from "./components/UserTable";
 import { IUser } from "./types/user";
 
-// const API = "http://localhost:5000/api/users";
-const API = "https://dynamicrudexpressbackend.vercel.app/api/users"
+const API = "http://localhost:5000/api/users";
+//const API = "https://dynamicrudexpressbackend.vercel.app/api/users"
 // frontend
 // https://dynamicrudexpressfrontend.vercel.app/
 
@@ -84,6 +84,7 @@ export default function Home() {
         <UserForm
           onSubmit={handleSubmit}
           selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
           loading={formLoading}
         />
 
