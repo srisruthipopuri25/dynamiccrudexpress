@@ -5,7 +5,7 @@ import UserForm from "./components/UserForm";
 import UserTable from "./components/UserTable";
 import { IUser } from "./types/user";
 
-const API = "http://localhost:5000/api/users";
+const API = process.env.NEXT_PUBLIC_API_URL;
 //const API = "https://dynamicrudexpressbackend.vercel.app/api/users"
 // frontend
 // https://dynamicrudexpressfrontend.vercel.app/
